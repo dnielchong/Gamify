@@ -1,16 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import {View, Text, ScrollView, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Redirect, router } from 'expo-router';
+import { router } from 'expo-router';
 import { images } from '../constants'
 import { CustomButton } from '../components';
+import {auth} from '../FirebaseConfig'
 import React from 'react';
 
 export default function HomeScreen() {
+
+  const user=auth.currentUser;
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: '100%'}}> 
         <View className="w-full justify-center items-center h-full px-4">
+
           <Image
             source={images.GamifyLogo2}
             className="w-[300px] h-[120px]"
@@ -24,7 +29,7 @@ export default function HomeScreen() {
 
           <CustomButton
             title="Sign In"
-            handlePress={() => {router.push('/sign-in')}}
+            handlePress={() => {router.replace('/sign-in')}}
             containerStyles="w-full mt-7"
           />
 

@@ -2,23 +2,34 @@ import { View, Text, ScrollView, Image} from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Link } from 'expo-router' 
-import { Redirect, router } from 'expo-router';
-
+import { router } from 'expo-router';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../FirebaseConfig'
 import { images } from '../../constants'
 import { CustomButton, FormField } from '../../components'
 
 const SignIn = () => {
+
   const [form, setForm] = useState({
     email: '',
     password: ''
   })
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const submit = () => {
-
+  const OnSignIn = () => {
+    signInWithEmailAndPassword(auth, form.email, form.password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user)
+        router.replace('/home')
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode + errorMessage)
+      });
   }
-
   
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -49,10 +60,10 @@ const SignIn = () => {
 
           <CustomButton 
             title="Log In"
-            handlePress={() => {router.push('/home')}}
-            //handlePress={submit}
+            handlePress={OnSignIn}
+            //handlePress={() => {router.replace('/home')}}
             containerStyles='mt-10'
-            isLoading={isSubmitting}
+            
           />
 
           <View className='justify-center pt-5 flex-row gap-2'>

@@ -1,24 +1,37 @@
 import { View, Text, ScrollView, Image} from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Link } from 'expo-router' 
+import { router } from 'expo-router';
+//import { Link } from 'expo-router' 
 
 import { images } from '../../constants'
 import { CustomButton, FormField } from '../../components'
-
+import { auth } from '../../FirebaseConfig'
+import { createUserWithEmailAndPassword} from 'firebase/auth'
+     
 const SignUp = () => {
+
   const [form, setForm] = useState({
     username: '',
     email: '',
     password: ''
   })
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const submit = () => {
-
+  const OnCreateAccount=()=>{
+    createUserWithEmailAndPassword(auth, form.email, form.password)
+      .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          console.log(user);
+          router.replace('/home')
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode + errorMessage)
+          
+        });
   }
-
   
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -38,7 +51,6 @@ const SignUp = () => {
             value={form.username}
             handleChangeText={(e) => setForm({ ...form, username: e})}
             otherStyles="mt-7"
-            
           />
           <FormField
             title="Email"
@@ -54,11 +66,10 @@ const SignUp = () => {
             otherStyles="mt-7"
           />
 
-          <CustomButton 
+          <CustomButton
             title="Sign Up"
-            handlePress={submit}
+            handlePress={OnCreateAccount}
             containerStyles='mt-10'
-            isLoading={isSubmitting}
           />
 
         </View>
