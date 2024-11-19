@@ -6,17 +6,27 @@ import {icons} from '../../constants'
 
 const TabIcon = ({ icon, color, name, focused}) => {
     return (
-        <View className="items-center justify-center gap-2">
-            <Image 
-                source={icon}
-                resizeMode="contain"
-                tintColor={color}
-                className='w-6 h-6'
-            />
-            <Text className={`${focused ? 'font-psemibold' : 'font=pregular'} text-xs`} style={{color: color}}>
-                {name}
-            </Text>
-        </View>
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 24, width: 60 }}>
+        <Image
+          source={icon}
+          resizeMode="contain"
+          style={{
+            width: 28,
+            height: 28,
+            tintColor: color,
+            marginBottom: 4,
+          }}
+        />
+        <Text
+          style={{
+            fontFamily: focused ? 'Poppins-SemiBold' : 'Poppins-Regular',
+            fontSize: 10,
+            color: color,
+            textAlign: 'center',
+          }}>
+          {name}
+        </Text>
+      </View>
     )
 }
 
@@ -31,8 +41,9 @@ const TabsLayout = () => {
                 backgroundColor: '#161622',
                 borderTopWidth: 1,
                 borderTopColor: '#232533',
-                height: 90
-            }
+                height: 87,
+                paddingBottom: 8,
+            },
             }}>
             
             <Tabs.Screen 
@@ -63,6 +74,16 @@ const TabsLayout = () => {
                             focused={focused}
                         />
                     )
+                }}
+            />
+            <Tabs.Screen
+                name="shop"
+                options={{
+                    title: 'Shop',
+                    headerShown: false,
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabIcon icon={icons.shop} color={color} name="Shop" focused={focused} />
+                    ),
                 }}
             />
             <Tabs.Screen 

@@ -11,4 +11,4 @@ import GamifyLogo2 from "../assets/images/GamifyLogo2.png";
 import GamifyStar2 from "../assets/images/GamifyStar2.png";
 
 
-export default { profile, thumbnail, cards, path, logo, logoSmall, empty, GamifyLogo, GamifyStar, GamifyLogo2, GamifyStar2 };
+export default { profile, thumbnail, cards, path, logo, logoSmall, empty, GamifyLogo, GamifyStar, GamifyLogo2, GamifyStar2};
